@@ -28,15 +28,18 @@ const opts = {
         },
     },
 };
-server.get("/ping", opts, (request, reply) => __awaiter(void 0, void 0, void 0, function* () {
+server.get("/ping", opts, (request, response) => __awaiter(void 0, void 0, void 0, function* () {
     return JSON.stringify(request.headers);
+}));
+server.get("*", opts, (request, response) => __awaiter(void 0, void 0, void 0, function* () {
+    response.statusCode = 404;
 }));
 const start = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        console.log(process.env);
-        yield server.listen({ port: 3000 });
-        const address = server.server.address();
-        const port = typeof address === "string" ? address : address === null || address === void 0 ? void 0 : address.port;
+        var env_port = !process.env.PING_LISTEN_PORT
+            ? 3000
+            : +process.env.PING_LISTEN_PORT;
+        yield server.listen({ port: env_port });
     }
     catch (err) {
         server.log.error(err);
