@@ -29,10 +29,11 @@ const opts = {
     },
 };
 server.get("/ping", opts, (request, reply) => __awaiter(void 0, void 0, void 0, function* () {
-    return { pong: "it worked!" };
+    return JSON.stringify(request.headers);
 }));
 const start = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
+        console.log(process.env);
         yield server.listen({ port: 3000 });
         const address = server.server.address();
         const port = typeof address === "string" ? address : address === null || address === void 0 ? void 0 : address.port;

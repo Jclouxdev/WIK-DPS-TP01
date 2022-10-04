@@ -19,11 +19,12 @@ const opts: RouteShorthandOptions = {
 };
 
 server.get("/ping", opts, async (request, reply) => {
-  return { pong: "it worked!" };
+  return JSON.stringify(request.headers);
 });
 
 const start = async () => {
   try {
+    // console.log(process.env);
     await server.listen({ port: 3000 });
 
     const address = server.server.address();
